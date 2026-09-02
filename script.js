@@ -85,6 +85,21 @@ const projectTrack = document.querySelector('.project-track');
 document.querySelector('.slider-next').addEventListener('click', () => projectTrack.scrollBy({ left: Math.min(650, window.innerWidth * .74), behavior: 'smooth' }));
 document.querySelector('.slider-prev').addEventListener('click', () => projectTrack.scrollBy({ left: -Math.min(650, window.innerWidth * .74), behavior: 'smooth' }));
 
+document.querySelectorAll('[data-youtube-id]').forEach(player => {
+  const trigger = player.querySelector('.video-poster-button');
+  if (!trigger) return;
+
+  trigger.addEventListener('click', () => {
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${player.dataset.youtubeId}?autoplay=1&rel=0`;
+    iframe.title = 'Experiência que decide — Munck DF';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allowFullscreen = true;
+    player.replaceChildren(iframe);
+  }, { once: true });
+});
+
 const quoteForm = document.getElementById('quote-form');
 quoteForm.addEventListener('submit', event => {
   event.preventDefault();
